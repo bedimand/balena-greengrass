@@ -8,7 +8,7 @@ var data = {
       borderWidth: 2,
       hoverBackgroundColor: "rgba(75,192,192,0.4)",
       hoverBorderColor: "rgba(75,192,192,1)",
-      data: [0, 0, 369, 2202, 11219],
+      data: [0, 0, 369 * 5.5, 2202 * 5.5, 11219 * 5.5],
     },
     {
       label: "IoT Greengrass",
@@ -17,7 +17,7 @@ var data = {
       borderWidth: 2,
       hoverBackgroundColor: "rgba(255,159,64,0.4)",
       hoverBorderColor: "rgba(255,159,64,1)",
-      data: [0.17, 1.64, 16.37, 163.65, 818.22],
+      data: [0.17 * 5.5, 1.64 * 5.5, 16.37 * 5.5, 163.65 * 5.5, 818.22 * 5.5],
     }
   ]
 };
@@ -30,6 +30,11 @@ var options = {
       grid: {
         display: true,
         color: "rgba(255,99,132,0.2)"
+      },
+      ticks: {
+        callback: function(value) {
+          return 'R$ ' + value;
+        }
       }
     },
     x: {
@@ -37,8 +42,21 @@ var options = {
         display: false
       }
     }
+  },
+  plugins: {
+    datalabels: {
+      display: true,
+      color: 'white',
+      align: 'end',
+      anchor: 'end',
+      formatter: function(value) {
+        return 'R$ ' + value.toFixed(2);
+      }
+    }
   }
 };
+
+Chart.register(ChartDataLabels);
 
 new Chart('chart', {
   type: 'bar',
